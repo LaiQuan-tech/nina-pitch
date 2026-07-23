@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>印刷檔線上收稿系統 — 提案</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%231a1a1a'/%3E%3Cpath d='M37 8 L20 36 L32 36 L28 56 L46 30 L34 30 Z' fill='%23ffce00'/%3E%3C/svg%3E">
+<meta name="description" content="印刷檔線上收稿系統提案 — 客戶自助上傳、AI 檢查檔名、自動產生工單、管理後台。特色功能、一個月時程與報價。萊乾資訊 LaiQuan。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#fffbec; --bg-alt:#ffffff; --bg-tint:#fff6d6;
+    --ink:#1a1a1a; --ink-2:#000000; --ink-soft:#2e2a1c;
+    --gray:#6b6357; --gray2:#9c9384; --line:rgba(26,26,26,.11);
+    --yellow:#ffce00; --yellow-soft:#ffe680; --yellow-wash:#fff6d6;
+    --ok:#15803d;
+    --sans:"Noto Sans TC",-apple-system,BlinkMacSystemFont,"PingFang TC","Segoe UI",sans-serif;
+    --display:"Baloo 2","Noto Sans TC",-apple-system,"PingFang TC",sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,monospace;
+    --ease:cubic-bezier(.16,1,.3,1);
+    --maxw:940px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-snap-type:y mandatory;scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
+  body{font-family:var(--sans);color:var(--ink);background:var(--bg);line-height:1.5;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  a{color:inherit;text-decoration:none;}
+
+  /* progress + header */
+  .progress{position:fixed;inset:0 0 auto 0;height:3px;z-index:80;background:transparent;pointer-events:none;}
+  .progress i{display:block;height:100%;width:0;background:var(--ink);transition:width .5s var(--ease);}
+  @media(max-width:640px){.progress{height:4px;}}
+  .topbar{position:fixed;inset:0 0 auto 0;z-index:70;display:flex;align-items:center;justify-content:space-between;
+    padding:13px clamp(18px,4vw,44px);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);
+    background:rgba(255,251,236,.8);border-bottom:1.5px solid var(--ink);}
+  .topbar .brand{display:flex;align-items:center;gap:10px;font-size:14.5px;font-weight:700;letter-spacing:.01em;font-family:var(--display);}
+  .topbar .brand .mk{height:26px;width:26px;border-radius:8px;background:var(--ink);display:flex;align-items:center;justify-content:center;flex:none;}
+  .topbar .brand .mk svg{width:16px;height:16px;display:block;}
+  .topbar .brand .co{color:var(--gray);font-weight:500;}
+  .topbar .links{display:flex;gap:20px;font-size:13.5px;font-weight:600;color:var(--gray);}
+  .topbar .links a{transition:color .2s;}
+  .topbar .links a:hover{color:var(--ink);}
+  @media(max-width:640px){.topbar .links{display:none;}}
+
+  /* dot nav */
+  .nav{position:fixed;top:50%;right:max(14px,2vw);transform:translateY(-50%);z-index:60;display:flex;flex-direction:column;gap:13px;align-items:flex-end;}
+  .nav button{position:relative;display:flex;align-items:center;cursor:pointer;background:none;border:0;padding:3px 0 3px 8px;}
+  .nav button::after{content:"";width:8px;height:8px;border-radius:999px;border:1.5px solid rgba(26,26,26,.32);background:transparent;
+    transition:transform .35s var(--ease),background .35s,border-color .35s;}
+  .nav button[data-active="true"]::after{background:var(--ink);border-color:var(--ink);transform:scale(1.6);}
+  .nav .lbl{margin-right:11px;font-size:12px;font-weight:600;color:var(--ink);background:rgba(255,255,255,.9);backdrop-filter:blur(6px);
+    -webkit-backdrop-filter:blur(6px);border:1.5px solid var(--ink);border-radius:999px;padding:3px 11px;white-space:nowrap;
+    opacity:0;transform:translateX(6px);transition:opacity .25s,transform .25s;pointer-events:none;box-shadow:2px 3px 0 rgba(26,26,26,.16);}
+  .nav button:hover .lbl,.nav button:focus-visible .lbl{opacity:1;transform:none;}
+  @media(max-width:820px){.nav{display:none;}}
+
+  /* slides */
+  .slide{min-height:100svh;scroll-snap-align:start;scroll-snap-stop:always;display:flex;flex-direction:column;
+    justify-content:center;align-items:center;text-align:center;padding:110px clamp(22px,5vw,40px) 84px;position:relative;}
+  .slide.alt{background:var(--bg-alt);}
+  .slide.tint{background:var(--bg-tint);}
+  .slide.punch{background:var(--yellow);}
+  .inner{width:100%;max-width:var(--maxw);}
+  .wide{max-width:1120px;}
+
+  .eyebrow{display:inline-block;font-size:12.5px;font-weight:700;color:var(--yellow);background:var(--ink);
+    letter-spacing:.02em;padding:6px 15px;border-radius:999px;margin-bottom:20px;}
+  h1{font-family:var(--display);font-size:clamp(40px,7.4vw,88px);font-weight:800;letter-spacing:-.01em;line-height:1.02;text-wrap:balance;}
+  h2{font-family:var(--display);font-size:clamp(31px,4.9vw,60px);font-weight:800;letter-spacing:-.005em;line-height:1.08;text-wrap:balance;}
+  .lead{font-size:clamp(17px,2.3vw,23px);font-weight:400;color:var(--gray);line-height:1.55;max-width:720px;margin:22px auto 0;letter-spacing:.005em;}
+  .fine{font-size:13.5px;color:var(--gray2);margin-top:16px;letter-spacing:.02em;font-weight:500;}
+  .stat{font-family:var(--display);font-size:clamp(84px,17vw,208px);font-weight:800;letter-spacing:-.02em;line-height:.9;color:var(--ink);}
+  .stat-cap{font-size:clamp(16px,2vw,20px);color:var(--gray);margin-top:6px;}
+
+  .punch .lead{color:var(--ink-soft);}
+  .punch .fine{color:#5c5322;}
+
+  .cta{display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:#fff;font-size:16px;font-weight:700;
+    padding:14px 28px;border-radius:980px;font-family:var(--display);
+    transition:transform .22s var(--ease),box-shadow .22s;margin-top:8px;box-shadow:3px 4px 0 rgba(26,26,26,.18);}
+  .cta:hover{transform:translate(-1px,-2px);box-shadow:5px 7px 0 rgba(26,26,26,.22);}
+  .cta.ghost{background:transparent;color:var(--ink);border:2px solid var(--ink);box-shadow:3px 4px 0 rgba(26,26,26,.14);}
+  .cta.ghost:hover{background:rgba(26,26,26,.05);}
+  .linkrow{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:34px;}
+
+  .scrollhint{position:absolute;bottom:34px;left:0;right:0;margin:0 auto;width:max-content;color:var(--ink-soft);font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;display:flex;flex-direction:column;align-items:center;gap:7px;}
+  .scrollhint .chev{width:16px;height:16px;border-right:2px solid var(--ink-soft);border-bottom:2px solid var(--ink-soft);transform:rotate(45deg);animation:bob 1.8s var(--ease) infinite;}
+  @keyframes bob{0%,100%{transform:rotate(45deg) translate(0,0);opacity:.85}50%{transform:rotate(45deg) translate(3px,3px);opacity:.35}}
+
+  /* feature grid */
+  .grid{display:grid;gap:clamp(16px,2.4vw,26px);margin-top:44px;text-align:left;}
+  .g4{grid-template-columns:repeat(4,1fr);}
+  .g3{grid-template-columns:repeat(3,1fr);}
+  .g2{grid-template-columns:repeat(2,1fr);}
+  @media(max-width:820px){.g4,.g3{grid-template-columns:1fr 1fr;}.g2{grid-template-columns:1fr;}}
+  @media(max-width:520px){.g4,.g3{grid-template-columns:1fr;}}
+  .cell .k{font-family:var(--display);font-size:clamp(17px,2vw,20px);font-weight:700;color:var(--ink);margin-bottom:7px;}
+  .cell .d{font-size:14.5px;color:var(--gray);line-height:1.6;}
+  .cell .num{display:inline-block;font-family:var(--display);font-size:14px;font-weight:800;color:var(--ink);background:var(--yellow);
+    padding:2px 10px;border-radius:8px;margin-bottom:13px;border:1.5px solid var(--ink);}
+
+  /* spotlight (mockup + text) */
+  .pv-wrap{display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(24px,4vw,56px);align-items:center;text-align:left;}
+  @media(max-width:820px){.pv-wrap{grid-template-columns:1fr;}}
+  .pv-side .why{list-style:none;display:flex;flex-direction:column;gap:13px;margin:20px 0 26px;}
+  .pv-side .why li{font-size:15.5px;color:var(--ink);padding-left:26px;position:relative;line-height:1.5;font-weight:500;}
+  .pv-side .why li::before{content:"";position:absolute;left:0;top:6px;width:11px;height:11px;border-radius:4px;background:var(--yellow);border:1.5px solid var(--ink);}
+
+  /* device frame */
+  .device{border-radius:20px;overflow:hidden;background:#fff;border:2px solid var(--ink);box-shadow:8px 10px 0 rgba(26,26,26,.14);}
+  .dev-head{height:34px;background:var(--ink);display:flex;align-items:center;gap:7px;padding:0 14px;}
+  .dev-head .d{width:11px;height:11px;border-radius:999px;background:var(--yellow);}
+  .dev-head .t{font-size:11px;color:rgba(255,255,255,.75);margin-left:6px;font-weight:500;}
+  .dev-body{padding:16px;background:#fffdf5;}
+
+  /* chat mockup */
+  .bub{max-width:88%;padding:10px 13px;border-radius:13px;font-size:12.5px;line-height:1.55;margin-bottom:9px;}
+  .bub.me{margin-left:auto;background:var(--ink);color:#fff;border-bottom-right-radius:4px;}
+  .bub.err{background:#fff4f4;border:1px solid #fbd0d0;color:#7f1d1d;border-bottom-left-radius:4px;}
+  .bub.ok{background:#f0fdf4;border:1px solid #bbf7d0;color:#14532d;border-bottom-left-radius:4px;}
+  .bub .fn{font-family:var(--mono);font-size:11px;word-break:break-all;}
+
+  /* work-order mockup */
+  .wo{background:#fff;border:1.5px solid var(--ink);border-radius:6px;overflow:hidden;font-size:11.5px;}
+  .wo .wt{font-family:var(--display);text-align:center;font-weight:800;letter-spacing:3px;padding:8px;border-bottom:1.5px solid var(--ink);}
+  .wo .rw{display:grid;grid-template-columns:74px 1fr;border-bottom:1px solid #ece0c4;}
+  .wo .rw:last-child{border-bottom:0;}
+  .wo .lb{background:var(--yellow-wash);font-weight:700;padding:7px 9px;color:var(--ink);}
+  .wo .vl{padding:7px 9px;}
+  .wo .vl.mono{font-family:var(--mono);font-size:10.5px;word-break:break-all;}
+
+  /* admin mockup */
+  .adm{background:#fff;border:1.5px solid var(--ink);border-radius:10px;overflow:hidden;}
+  .adm .ah{display:grid;grid-template-columns:1.1fr 1.4fr .7fr .6fr;font-size:10.5px;color:var(--gray);font-weight:700;padding:10px 13px;border-bottom:1.5px solid var(--ink);letter-spacing:.02em;}
+  .adm .ar{display:grid;grid-template-columns:1.1fr 1.4fr .7fr .6fr;font-size:12px;padding:12px 13px;border-bottom:1px solid #f0e8d4;align-items:center;}
+  .adm .ar:last-child{border-bottom:0;}
+  .adm .nm{font-weight:700;}
+  .adm .sub{color:var(--gray);font-size:11px;}
+  .pill{font-size:10.5px;font-weight:700;padding:2px 9px;border-radius:999px;border:1.5px solid var(--ink);}
+  .pill.ok{background:var(--yellow);color:var(--ink);}
+  .pill.wait{background:#fff;color:var(--gray);}
+
+  /* flow steps */
+  .flow{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:44px;text-align:left;}
+  @media(max-width:820px){.flow{grid-template-columns:1fr 1fr;}}
+  @media(max-width:520px){.flow{grid-template-columns:1fr;}}
+  .fstep{background:#fff;border:2px solid var(--ink);border-radius:16px;padding:18px 18px 20px;position:relative;box-shadow:4px 5px 0 rgba(26,26,26,.12);}
+  .fstep .n{font-family:var(--display);font-size:14px;font-weight:800;color:var(--ink);background:var(--yellow);width:30px;height:30px;border-radius:999px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;border:1.5px solid var(--ink);}
+  .fstep .k{font-family:var(--display);font-size:16px;font-weight:700;margin-bottom:6px;}
+  .fstep .d{font-size:13.5px;color:var(--gray);line-height:1.55;}
+
+  /* browser preview */
+  .browser{border-radius:16px;overflow:hidden;border:2px solid var(--ink);box-shadow:8px 10px 0 rgba(26,26,26,.14);background:#fff;margin-top:8px;}
+  .bchrome{height:40px;background:var(--yellow-wash);display:flex;align-items:center;gap:7px;padding:0 14px;border-bottom:1.5px solid var(--ink);}
+  .bchrome .bd{width:11px;height:11px;border-radius:999px;background:var(--ink);}
+  .burl{margin-left:12px;font-size:12px;color:var(--ink);background:#fff;border:1.5px solid var(--ink);border-radius:7px;padding:4px 14px;flex:1;max-width:340px;font-family:var(--mono);}
+  .bframe{width:100%;height:min(56vh,520px);border:0;display:block;background:#fffbec;}
+
+  /* timeline */
+  .tl{display:flex;flex-direction:column;gap:2px;margin-top:40px;text-align:left;max-width:760px;margin-left:auto;margin-right:auto;}
+  .tl .step{display:grid;grid-template-columns:150px 1fr;gap:20px;padding:15px 4px;border-bottom:1px solid var(--line);align-items:baseline;}
+  @media(max-width:520px){.tl .step{grid-template-columns:104px 1fr;gap:12px;}}
+  .tl .when{font-family:var(--display);font-size:14.5px;font-weight:700;color:var(--gray);font-variant-numeric:tabular-nums;}
+  .tl .what{font-size:15.5px;color:var(--ink);font-weight:500;}
+  .tl .what small{display:block;color:var(--gray);font-size:13px;margin-top:2px;font-weight:400;}
+  .tl .step.mile{background:var(--yellow-wash);border:1.5px solid var(--ink);border-radius:12px;padding:15px 16px;margin:4px 0;}
+  .tl .step.mile .when{color:var(--ink);}
+  .tl .step.mile .what b{color:var(--ink);font-weight:800;}
+  .tl .tag{display:inline-block;font-size:11px;font-weight:700;color:var(--yellow);background:var(--ink);border-radius:999px;padding:1px 10px;margin-left:8px;vertical-align:middle;}
+
+  /* quote */
+  .qlist{margin-top:36px;text-align:left;max-width:680px;margin-left:auto;margin-right:auto;}
+  .qrow{display:flex;justify-content:space-between;align-items:baseline;gap:20px;padding:13px 0;border-bottom:1px solid var(--line);}
+  .qrow .l{font-size:15.5px;font-weight:600;}
+  .qrow .l small{display:block;font-size:12.5px;color:var(--gray2);font-weight:400;margin-top:3px;line-height:1.5;}
+  .qrow .v{font-family:var(--display);font-size:15.5px;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap;}
+  .qsum{display:flex;justify-content:space-between;align-items:baseline;padding:9px 0;font-size:14px;color:var(--gray);}
+  .qsum .v{font-variant-numeric:tabular-nums;font-weight:700;color:var(--ink);font-family:var(--display);}
+  .qtotal{display:flex;justify-content:space-between;align-items:center;margin-top:14px;padding:16px 22px;background:var(--ink);color:#fff;border-radius:14px;box-shadow:5px 6px 0 rgba(26,26,26,.18);}
+  .qtotal .l{font-family:var(--display);font-size:16px;font-weight:700;letter-spacing:.5px;}
+  .qtotal .v{font-family:var(--display);font-size:clamp(30px,4.4vw,46px);font-weight:800;letter-spacing:-.01em;font-variant-numeric:tabular-nums;color:var(--yellow);}
+  .qtotal .v small{font-size:16px;font-weight:600;opacity:.85;margin-right:4px;}
+  .qnote{font-size:13px;color:var(--gray);margin-top:16px;text-align:center;font-weight:500;}
+
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .9s var(--ease),transform .9s var(--ease);}
+  .reveal.in{opacity:1;transform:none;}
+  @media(prefers-reduced-motion:reduce){
+    html{scroll-snap-type:none;scroll-behavior:auto;}
+    .reveal{opacity:1;transform:none;transition:none;}
+    .scrollhint .chev{animation:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="progress"><i id="pfill"></i></div>
+
+<header class="topbar">
+  <a class="brand" href="#s1"><span class="mk"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M37 8 L20 36 L32 36 L28 56 L46 30 L34 30 Z" fill="#ffce00"/></svg></span>印刷檔線上收稿系統<span class="co">· 萊乾資訊</span></a>
+  <nav class="links">
+    <a href="https://nina-navy.vercel.app" target="_blank" rel="noopener">客戶收稿頁</a>
+    <a href="https://nina-navy.vercel.app/admin" target="_blank" rel="noopener">管理後台</a>
+    <a href="https://laiquan.co" target="_blank" rel="noopener">laiquan.co</a>
+  </nav>
+</header>
+
+<nav class="nav" id="dots" aria-label="投影片導覽"></nav>
+
+<!-- 1 COVER -->
+<section class="slide punch" id="s1" data-label="封面">
+  <div class="inner">
+    <div class="eyebrow reveal">系統提案　·　2026</div>
+    <h1 class="reveal" style="transition-delay:.06s">印刷檔<br>線上收稿系統</h1>
+    <p class="lead reveal" style="transition-delay:.12s">客戶自助上傳印刷檔，AI 自動檢查檔名、<br>格式正確才收件，並自動產生工單。</p>
+    <p class="fine reveal" style="transition-delay:.2s">為 城盛 打造　·　一個月完工上線　·　萊乾資訊 LaiQuan</p>
+  </div>
+  <div class="scrollhint reveal" style="transition-delay:.3s">Scroll<span class="chev"></span></div>
+</section>
+
+<!-- 2 WHY -->
+<section class="slide alt" id="s2" data-label="為什麼">
+  <div class="inner">
+    <div class="eyebrow reveal">現況</div>
+    <h2 class="reveal" style="transition-delay:.05s">收稿的一來一往，<br>正在吃掉現場工時。</h2>
+    <p class="lead reveal" style="transition-delay:.12s">檔名沒填對要打電話回問、工單靠人工 key、稿件進度用 LINE 追 —— 這些每天重複的溝通，其實都能交給系統自己跑。</p>
+  </div>
+</section>
+
+<!-- 3 PAIN POINTS -->
+<section class="slide" id="s3" data-label="四大痛點">
+  <div class="inner wide">
+    <div class="eyebrow reveal">四個要解決的問題</div>
+    <h2 class="reveal" style="transition-delay:.05s">從這裡開始。</h2>
+    <div class="grid g4 reveal" style="transition-delay:.12s">
+      <div class="cell"><div class="k">檔名填錯</div><div class="d">客戶命名不符規則，得逐一打電話回問、反覆改，收稿卡在第一步。</div></div>
+      <div class="cell"><div class="k">手 key 工單</div><div class="d">從檔名一個字一個字抄成工單，費時又容易抄錯尺寸、材質。</div></div>
+      <div class="cell"><div class="k">追稿往返</div><div class="d">電話與 LINE 來回確認收到沒、格式對不對，訊息散落難查。</div></div>
+      <div class="cell"><div class="k">資料難追蹤</div><div class="d">客戶聯絡方式與稿件紀錄沒有集中留存，後續要找人、對單很麻煩。</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 SOLUTION -->
+<section class="slide punch" id="s4" data-label="解法">
+  <div class="inner">
+    <div class="eyebrow reveal">解法</div>
+    <h2 class="reveal" style="transition-delay:.05s">錯的檔名進不來，<br>對的自動變工單。</h2>
+    <p class="lead reveal" style="transition-delay:.12s">一條龍線上收稿：客戶自助上傳 → 系統即時檢查檔名 → 格式正確才收件 → 自動拆解產生工單，全程留下對話與聯絡資訊，現場只要處理「已經對好的」稿。</p>
+  </div>
+</section>
+
+<!-- 5 FEATURES -->
+<section class="slide alt" id="s5" data-label="核心功能">
+  <div class="inner wide">
+    <div class="eyebrow reveal">核心功能</div>
+    <h2 class="reveal" style="transition-delay:.05s">一套系統，六件事做到底。</h2>
+    <div class="grid g3 reveal" style="transition-delay:.12s">
+      <div class="cell"><div class="num">01</div><div class="k">檔名智慧檢查</div><div class="d">依貴公司命名規則即時驗證，缺哪段、錯哪段精準指出，AI 親切引導客戶改到對為止。</div></div>
+      <div class="cell"><div class="num">02</div><div class="k">ERP 商品自動帶入</div><div class="d">串接 699 筆印刷商品主檔，依商品編號自動帶出正確品名（高遮PVC+霧⋯），免人工對照。</div></div>
+      <div class="cell"><div class="num">03</div><div class="k">自動產生工單</div><div class="d">收件即依檔名拆解建立工單，版面比照現行工單、自動編號，可線上檢視與 A4 列印。</div></div>
+      <div class="cell"><div class="num">04</div><div class="k">客戶自助收稿</div><div class="d">拖曳、多檔上傳；聯絡資訊「記住我」，回訪一鍵免再填，體驗像手機 App。</div></div>
+      <div class="cell"><div class="num">05</div><div class="k">管理後台</div><div class="d">多位管理員各自帳號登入，逐案查看完整對話、收件狀態與自動建立的工單。</div></div>
+      <div class="cell"><div class="num">06</div><div class="k">資料安全</div><div class="d">私有檔案儲存、資料表權限控管（RLS）、管理密碼雜湊，客戶資料不外流。</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 SPOTLIGHT A: 檔名把關 -->
+<section class="slide" id="s6" data-label="特色 · 檔名把關">
+  <div class="inner wide">
+    <div class="pv-wrap">
+      <div class="device reveal" aria-hidden="true">
+        <div class="dev-head"><span class="d"></span><span class="t">印刷檔收稿小幫手</span></div>
+        <div class="dev-body">
+          <div class="bub me">📄 海報設計.ai</div>
+          <div class="bub err">檔名格式需要調整：<br>「底線分段」應為 3 段（流水號＿客戶＿內容），目前是 1 段。請改好再拖進來 🙌</div>
+          <div class="bub me"><span class="fn">069871_{(月匯)百陽廣告}_(78)⋯pvc+霧-1CCPVC720N10M.ai</span></div>
+          <div class="bub ok">檔名格式正確 ✅ 收件中…<br>✅ 送件成功！已收到您的檔案，我們會盡快處理。</div>
+        </div>
+      </div>
+      <div class="pv-side">
+        <div class="eyebrow reveal">特色一 · 檔名把關</div>
+        <h2 class="reveal" style="transition-delay:.05s;font-size:clamp(26px,3.4vw,40px)">不對的檔名，<br>當場就擋下。</h2>
+        <ul class="why reveal" style="transition-delay:.1s">
+          <li>依貴公司命名規則即時檢查，規則可調整</li>
+          <li>缺哪段、哪段錯，精準指出、不含糊</li>
+          <li>AI 用親切口吻一步步引導客戶改名</li>
+          <li>格式正確才真正收件，錯檔完全不進系統</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 SPOTLIGHT B: 自動工單 -->
+<section class="slide alt" id="s7" data-label="特色 · 自動工單">
+  <div class="inner wide">
+    <div class="pv-wrap">
+      <div class="device reveal" aria-hidden="true">
+        <div class="dev-head"><span class="d"></span><span class="t">工單　CK1150722-0001</span></div>
+        <div class="dev-body">
+          <div class="wo">
+            <div class="wt">工　單</div>
+            <div class="rw"><div class="lb">工單編號</div><div class="vl mono">CK1150722-0001</div></div>
+            <div class="rw"><div class="lb">客戶名稱</div><div class="vl">(月匯)百陽廣告</div></div>
+            <div class="rw"><div class="lb">商品名稱</div><div class="vl">高遮PVC+霧　<span style="color:#9c9384">(CCPVC720N)</span></div></div>
+            <div class="rw"><div class="lb">成品尺寸</div><div class="vl">90*100CM</div></div>
+            <div class="rw"><div class="lb">材料規格</div><div class="vl mono">CCPVC720N10M</div></div>
+            <div class="rw"><div class="lb">加工項目</div><div class="vl">四邊切齊</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="pv-side">
+        <div class="eyebrow reveal">特色二 · 自動工單</div>
+        <h2 class="reveal" style="transition-delay:.05s;font-size:clamp(26px,3.4vw,40px)">檔名一對，<br>工單自己長出來。</h2>
+        <ul class="why reveal" style="transition-delay:.1s">
+          <li>依檔名自動拆解流水號、客戶、尺寸、材質⋯</li>
+          <li>商品名稱自動查 ERP 主檔，帶出正確品名</li>
+          <li>工單自動編號，版面比照現行實體工單</li>
+          <li>線上即時檢視，可直接 A4 列印</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8 SPOTLIGHT C: 後台 -->
+<section class="slide" id="s8" data-label="特色 · 管理後台">
+  <div class="inner wide">
+    <div class="pv-wrap">
+      <div class="device reveal" aria-hidden="true">
+        <div class="dev-head"><span class="d"></span><span class="t">管理後台 · 收稿案件</span></div>
+        <div class="dev-body">
+          <div class="adm">
+            <div class="ah"><span>聯絡人</span><span>Email／手機</span><span>狀態</span><span>收件</span></div>
+            <div class="ar"><span class="nm">王小明</span><span class="sub">ming@example.com<br>0912-345-678</span><span><span class="pill ok">已收件</span></span><span>2 件</span></div>
+            <div class="ar"><span class="nm">陳美麗</span><span class="sub">meili@example.com<br>0955-123-456</span><span><span class="pill wait">洽談中</span></span><span>0 件</span></div>
+            <div class="ar"><span class="nm">林大衛</span><span class="sub">david@example.com<br>0933-888-222</span><span><span class="pill ok">已收件</span></span><span>1 件</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="pv-side">
+        <div class="eyebrow reveal">特色三 · 管理後台</div>
+        <h2 class="reveal" style="transition-delay:.05s;font-size:clamp(26px,3.4vw,40px)">每一筆案件，<br>看得清清楚楚。</h2>
+        <ul class="why reveal" style="transition-delay:.1s">
+          <li>多位管理員各自帳號密碼登入</li>
+          <li>逐案完整對話紀錄與收件狀態</li>
+          <li>自動建立的工單集中管理、隨時列印</li>
+          <li>客戶姓名／Email／手機完整留存，方便追蹤</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 9 FLOW -->
+<section class="slide tint" id="s9" data-label="運作流程">
+  <div class="inner wide">
+    <div class="eyebrow reveal">運作流程</div>
+    <h2 class="reveal" style="transition-delay:.05s">客戶四步，現場零負擔。</h2>
+    <div class="flow reveal" style="transition-delay:.12s">
+      <div class="fstep"><div class="n">1</div><div class="k">留聯絡方式</div><div class="d">客戶進站先填姓名／Email／手機，可勾「記住我」下次免填。</div></div>
+      <div class="fstep"><div class="n">2</div><div class="k">上傳印刷檔</div><div class="d">拖曳或選檔，可一次上傳多個檔案。</div></div>
+      <div class="fstep"><div class="n">3</div><div class="k">系統檢查檔名</div><div class="d">格式不對 → AI 引導改名、不收件；格式正確 → 收件。</div></div>
+      <div class="fstep"><div class="n">4</div><div class="k">自動建立工單</div><div class="d">收件成功即產生工單並進後台，現場直接接手生產。</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 LIVE PREVIEW -->
+<section class="slide alt" id="s10" data-label="實機預覽">
+  <div class="inner wide">
+    <div class="eyebrow reveal">實機預覽</div>
+    <h2 class="reveal" style="transition-delay:.05s">系統已經上線，現在就能試。</h2>
+    <div class="browser reveal" style="transition-delay:.12s">
+      <div class="bchrome"><span class="bd"></span><span class="bd"></span><span class="bd"></span><span class="burl">nina-navy.vercel.app</span></div>
+      <iframe class="bframe" src="https://nina-navy.vercel.app" loading="lazy" title="印刷檔收稿系統實機預覽"></iframe>
+    </div>
+    <div class="linkrow reveal" style="transition-delay:.16s">
+      <a class="cta" href="https://nina-navy.vercel.app" target="_blank" rel="noopener">開啟客戶收稿頁　›</a>
+      <a class="cta ghost" href="https://nina-navy.vercel.app/admin" target="_blank" rel="noopener">開啟管理後台　›</a>
+    </div>
+  </div>
+</section>
+
+<!-- 11 TIMELINE -->
+<section class="slide" id="s11" data-label="時間表">
+  <div class="inner wide">
+    <div class="eyebrow reveal">執行時間表</div>
+    <h2 class="reveal" style="transition-delay:.05s">一個月，完工上線。</h2>
+    <div class="tl reveal" style="transition-delay:.12s">
+      <div class="step"><span class="when">第 1 週</span><span class="what">需求確認與流程盤點<small>確認命名規則、匯入 ERP 商品／加工主檔</small></span></div>
+      <div class="step"><span class="when">第 2 週</span><span class="what">線上收稿前台 + 檔名智慧驗證引擎<small>AI 引導、拖曳多檔上傳、聯絡表單與記憶</small></span></div>
+      <div class="step mile"><span class="when">第 2 週末</span><span class="what"><b>交付測試版</b><span class="tag">里程碑</span><small>供現場實際試收稿、驗收體驗</small></span></div>
+      <div class="step"><span class="when">第 3 週</span><span class="what">自動工單 + 管理後台<small>工單產生與列印、多帳號、對話紀錄、案件管理</small></span></div>
+      <div class="step"><span class="when">第 4 週</span><span class="what">整合測試 · 部署上線 · 操作教學<small>端到端驗收、正式網址啟用、現場教學交付</small></span></div>
+      <div class="step mile"><span class="when">第 4 週末</span><span class="what"><b>正式上線</b><span class="tag">里程碑</span><small>啟用正式站，開始線上收稿</small></span></div>
+    </div>
+    <p class="fine reveal" style="transition-delay:.2s">＊實際起訖日以雙方簽約後確認為準，總期程約一個月（四週）。</p>
+  </div>
+</section>
+
+<!-- 12 QUOTE -->
+<section class="slide tint" id="s12" data-label="報價">
+  <div class="inner">
+    <div class="eyebrow reveal">報價</div>
+    <h2 class="reveal" style="transition-delay:.05s">一次到位的投資。</h2>
+    <div class="qlist reveal" style="transition-delay:.12s">
+      <div class="qrow"><span class="l">系統規劃與需求分析<small>命名規則盤點、ERP 商品資料分析</small></span><span class="v">6,000</span></div>
+      <div class="qrow"><span class="l">線上收稿前台<small>AI 引導、多檔上傳、聯絡表單與記憶</small></span><span class="v">12,000</span></div>
+      <div class="qrow"><span class="l">檔名驗證引擎 ＋ ERP 商品主檔整合<small>699 商品／149 加工自動查表帶名</small></span><span class="v">12,000</span></div>
+      <div class="qrow"><span class="l">自動工單產生與列印<small>比照現行工單、自動編號</small></span><span class="v">8,000</span></div>
+      <div class="qrow"><span class="l">管理員後台<small>多帳號、對話紀錄、收件狀態、工單管理</small></span><span class="v">12,000</span></div>
+      <div class="qrow"><span class="l">雲端資料庫與檔案儲存建置<small>資料表、權限與資安設定</small></span><span class="v">5,000</span></div>
+      <div class="qrow"><span class="l">部署上線與測試交付<small>雲端部署、端到端驗收、教學</small></span><span class="v">3,000</span></div>
+      <div class="qsum"><span>未稅小計</span><span class="v">NT$ 58,000</span></div>
+      <div class="qsum"><span>營業稅 5%</span><span class="v">NT$ 2,900</span></div>
+      <div class="qtotal"><span class="l">含稅總計</span><span class="v"><small>NT$</small>60,900</span></div>
+    </div>
+    <p class="qnote reveal" style="transition-delay:.2s">報價含設計、開發、雲端部署、上線與操作教學交付　·　有效期限 30 天　·　付款方式可議</p>
+  </div>
+</section>
+
+<!-- 13 CLOSING -->
+<section class="slide punch" id="s13" data-label="結尾">
+  <div class="inner">
+    <div class="eyebrow reveal">The pitch</div>
+    <h1 class="reveal" style="transition-delay:.05s;font-size:clamp(30px,5.2vw,62px)">讓收稿這件事，<br>從此不再費工。</h1>
+    <div class="linkrow reveal" style="transition-delay:.14s">
+      <a class="cta" href="https://nina-navy.vercel.app" target="_blank" rel="noopener">開啟實機預覽　›</a>
+      <a class="cta ghost" href="#s12">回看報價</a>
+    </div>
+    <p class="fine reveal" style="transition-delay:.24s">萊乾資訊　LaiQuan Tech　·　把好點子通電上線 ⚡</p>
+  </div>
+</section>
+
+<script>
+(function(){
+  var slides=[].slice.call(document.querySelectorAll('.slide'));
+  var dotsWrap=document.getElementById('dots');
+  var pfill=document.getElementById('pfill');
+  var total=slides.length, active=0;
+
+  slides.forEach(function(s,i){
+    var b=document.createElement('button');
+    b.type='button';
+    b.setAttribute('aria-label','前往：'+(s.dataset.label||('第 '+(i+1)+' 頁')));
+    b.innerHTML='<span class="lbl">'+(s.dataset.label||(i+1))+'</span>';
+    b.addEventListener('click',function(){ slides[i].scrollIntoView({behavior:'smooth'}); });
+    dotsWrap.appendChild(b);
+  });
+  var dots=[].slice.call(dotsWrap.children);
+
+  function setActive(i){
+    if(i===active) return;
+    active=i;
+    dots.forEach(function(d,j){ d.setAttribute('data-active', j===i?'true':'false'); });
+    if(pfill) pfill.style.width=((i+1)/total*100)+'%';
+  }
+  dots[0].setAttribute('data-active','true');
+  if(pfill) pfill.style.width=(1/total*100)+'%';
+
+  if('IntersectionObserver' in window){
+    var actObs=new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(e.isIntersecting && e.intersectionRatio>=0.55){ setActive(slides.indexOf(e.target)); }
+      });
+    },{threshold:[0.55]});
+    slides.forEach(function(s){ actObs.observe(s); });
+
+    var revObs=new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(e.isIntersecting) e.target.classList.add('in');
+        else e.target.classList.remove('in');
+      });
+    },{threshold:0.18});
+    document.querySelectorAll('.reveal').forEach(function(r){ revObs.observe(r); });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function(r){ r.classList.add('in'); });
+  }
+
+  window.addEventListener('keydown',function(ev){
+    var k=ev.key;
+    if(k==='ArrowDown'||k==='PageDown'||k===' '||k==='Spacebar'){ ev.preventDefault(); if(active<total-1) slides[active+1].scrollIntoView({behavior:'smooth'}); }
+    else if(k==='ArrowUp'||k==='PageUp'){ ev.preventDefault(); if(active>0) slides[active-1].scrollIntoView({behavior:'smooth'}); }
+    else if(k==='Home'){ ev.preventDefault(); slides[0].scrollIntoView({behavior:'smooth'}); }
+    else if(k==='End'){ ev.preventDefault(); slides[total-1].scrollIntoView({behavior:'smooth'}); }
+  });
+})();
+</script>
+</body>
+</html>
