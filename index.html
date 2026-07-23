@@ -183,6 +183,36 @@
   .qtotal .v small{font-size:16px;font-weight:600;opacity:.85;margin-right:4px;}
   .qnote{font-size:13px;color:var(--gray);margin-top:16px;text-align:center;font-weight:500;}
 
+  /* add-on package + product mockup */
+  .pchip{display:inline-flex;align-items:baseline;gap:9px;background:var(--yellow);border:2px solid var(--ink);border-radius:999px;padding:10px 22px;font-family:var(--display);font-weight:800;font-size:17px;margin-top:6px;box-shadow:3px 4px 0 rgba(26,26,26,.16);}
+  .pchip small{font-weight:600;font-size:12.5px;color:var(--ink-soft);}
+  .pcard{background:#fff;border:2px solid var(--ink);border-radius:16px;overflow:hidden;box-shadow:8px 10px 0 rgba(26,26,26,.13);}
+  .pcard .pimg{height:104px;background:linear-gradient(135deg,#ffe680,#ffce00);display:flex;align-items:center;justify-content:center;font-size:36px;border-bottom:1.5px solid var(--ink);}
+  .pcard .pinfo{padding:12px 15px 4px;}
+  .pcard .pname{font-family:var(--display);font-weight:700;font-size:14.5px;}
+  .pcard .pprice{font-family:var(--display);font-weight:800;font-size:16px;margin-top:2px;}
+  .pcard .pbtns{display:flex;gap:9px;padding:11px 15px 15px;}
+  .pbtn{flex:1;text-align:center;font-size:12px;font-weight:700;padding:9px;border-radius:9px;border:1.5px solid var(--ink);}
+  .pbtn.cart{background:#fff;color:var(--ink);}
+  .pbtn.ai{background:var(--ink);color:var(--yellow);}
+  .pcard .pchat{border-top:1.5px solid var(--ink);padding:12px 15px 6px;background:#fffdf5;}
+
+  /* two-package quote */
+  .qcols{display:grid;grid-template-columns:1fr 1fr;gap:clamp(26px,4vw,52px);margin-top:30px;text-align:left;align-items:start;}
+  @media(max-width:760px){.qcols{grid-template-columns:1fr;gap:26px;}}
+  .qhead{font-family:var(--display);font-size:15px;font-weight:800;color:var(--ink);padding-bottom:9px;border-bottom:2.5px solid var(--ink);display:flex;justify-content:space-between;align-items:baseline;}
+  .qhead small{font-weight:600;color:var(--gray);font-size:12px;}
+  .qcols .qrow{padding:9px 0;gap:14px;}
+  .qcols .qrow .l{font-size:14px;font-weight:500;}
+  .qcols .qrow .v{font-size:14px;}
+  .qsubr{display:flex;justify-content:space-between;align-items:baseline;padding-top:11px;margin-top:4px;border-top:1.5px solid var(--line);font-weight:700;}
+  .qsubr .v{font-family:var(--display);font-weight:800;font-variant-numeric:tabular-nums;}
+  .qgrand{display:flex;justify-content:space-between;align-items:center;gap:18px;margin-top:22px;padding:16px 24px;background:var(--ink);color:#fff;border-radius:14px;box-shadow:5px 6px 0 rgba(26,26,26,.18);}
+  .qgrand .l{font-family:var(--display);font-size:15px;font-weight:700;}
+  .qgrand .l small{display:block;font-size:12px;font-weight:500;color:rgba(255,255,255,.72);margin-top:4px;letter-spacing:0;}
+  .qgrand .v{font-family:var(--display);font-size:clamp(28px,4vw,44px);font-weight:800;color:var(--yellow);font-variant-numeric:tabular-nums;white-space:nowrap;}
+  .qgrand .v small{font-size:15px;font-weight:600;opacity:.85;margin-right:4px;}
+
   /* reveal */
   .reveal{opacity:0;transform:translateY(26px);transition:opacity .9s var(--ease),transform .9s var(--ease);}
   .reveal.in{opacity:1;transform:none;}
@@ -402,24 +432,71 @@
   </div>
 </section>
 
+<!-- 11b ADD-ON: 官網翻新 -->
+<section class="slide tint" id="s11b" data-label="加價購 · 官網翻新">
+  <div class="inner wide">
+    <div class="eyebrow reveal">加價購方案 · 選配</div>
+    <h2 class="reveal" style="transition-delay:.05s">順手，把官網一起翻新。</h2>
+    <p class="lead reveal" style="transition-delay:.1s">除了收稿系統，也能幫你把品牌官網一起升級 —— 讓每個商品都會「說話」、記得住每位會員。</p>
+    <div class="pv-wrap" style="margin-top:40px">
+      <div class="pcard reveal" aria-hidden="true">
+        <div class="pimg">🖼️</div>
+        <div class="pinfo">
+          <div class="pname">高遮PVC+霧 · 大圖輸出</div>
+          <div class="pprice">NT$ 180 / 才</div>
+        </div>
+        <div class="pbtns">
+          <span class="pbtn cart">加入詢價</span>
+          <span class="pbtn ai">🤖 AI 客服</span>
+        </div>
+        <div class="pchat">
+          <div class="bub me" style="font-size:12px">這款貼室外會不會掉色？</div>
+          <div class="bub ok" style="font-size:12px">高遮PVC 抗 UV、防水，戶外可用 1–2 年 👍 需要我幫您估價嗎？</div>
+        </div>
+      </div>
+      <div class="pv-side">
+        <ul class="why reveal" style="transition-delay:.1s;margin-top:0">
+          <li><b>商品 AI 客服</b>：每個商品下方一顆「AI 客服」按鈕，客人點進去由 AI 助手即時接管，解答規格、估價與推薦。</li>
+          <li><b>會員系統 · 記住喜好</b>：會員登入後，AI 記住每位會員的偏好與過往紀錄，越用越懂客人。</li>
+          <li><b>智慧 EDM</b>：AI 依會員喜好，不定期自動寄送 email 特別資訊與優惠，主動把客人帶回來。</li>
+        </ul>
+        <span class="pchip reveal" style="transition-delay:.16s">加價購 NT$58,000<small>未稅 · 含稅 60,900</small></span>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- 12 QUOTE -->
-<section class="slide tint" id="s12" data-label="報價">
-  <div class="inner">
+<section class="slide" id="s12" data-label="報價">
+  <div class="inner wide">
     <div class="eyebrow reveal">報價</div>
     <h2 class="reveal" style="transition-delay:.05s">一次到位的投資。</h2>
-    <div class="qlist reveal" style="transition-delay:.12s">
-      <div class="qrow"><span class="l">系統規劃與需求分析<small>命名規則盤點、ERP 商品資料分析</small></span><span class="v">6,000</span></div>
-      <div class="qrow"><span class="l">線上收稿前台<small>AI 引導、多檔上傳、聯絡表單與記憶</small></span><span class="v">12,000</span></div>
-      <div class="qrow"><span class="l">檔名驗證引擎 ＋ ERP 商品主檔整合<small>699 商品／149 加工自動查表帶名</small></span><span class="v">12,000</span></div>
-      <div class="qrow"><span class="l">自動工單產生與列印<small>比照現行工單、自動編號</small></span><span class="v">8,000</span></div>
-      <div class="qrow"><span class="l">管理員後台<small>多帳號、對話紀錄、收件狀態、工單管理</small></span><span class="v">12,000</span></div>
-      <div class="qrow"><span class="l">雲端資料庫與檔案儲存建置<small>資料表、權限與資安設定</small></span><span class="v">5,000</span></div>
-      <div class="qrow"><span class="l">部署上線與測試交付<small>雲端部署、端到端驗收、教學</small></span><span class="v">3,000</span></div>
-      <div class="qsum"><span>未稅小計</span><span class="v">NT$ 58,000</span></div>
-      <div class="qsum"><span>營業稅 5%</span><span class="v">NT$ 2,900</span></div>
-      <div class="qtotal"><span class="l">含稅總計</span><span class="v"><small>NT$</small>60,900</span></div>
+    <div class="qcols reveal" style="transition-delay:.12s">
+      <div>
+        <div class="qhead">主系統 · 印刷收稿系統 <small>未稅</small></div>
+        <div class="qrow"><span class="l">系統規劃與需求分析</span><span class="v">10,000</span></div>
+        <div class="qrow"><span class="l">線上收稿前台</span><span class="v">22,000</span></div>
+        <div class="qrow"><span class="l">檔名驗證引擎 ＋ ERP 主檔整合</span><span class="v">24,000</span></div>
+        <div class="qrow"><span class="l">自動工單產生與列印</span><span class="v">14,000</span></div>
+        <div class="qrow"><span class="l">管理員後台</span><span class="v">18,000</span></div>
+        <div class="qrow"><span class="l">雲端資料庫與檔案儲存建置</span><span class="v">7,000</span></div>
+        <div class="qrow"><span class="l">部署上線與測試交付</span><span class="v">5,000</span></div>
+        <div class="qsubr"><span>未稅小計</span><span class="v">100,000</span></div>
+      </div>
+      <div>
+        <div class="qhead">加價購 · 官網翻新 <small>選配</small></div>
+        <div class="qrow"><span class="l">商品 AI 客服按鈕 · AI 助手接管</span><span class="v" style="color:var(--ok)">✓</span></div>
+        <div class="qrow"><span class="l">會員系統 · AI 記住會員喜好</span><span class="v" style="color:var(--ok)">✓</span></div>
+        <div class="qrow"><span class="l">智慧 EDM · AI 不定期寄特別資訊</span><span class="v" style="color:var(--ok)">✓</span></div>
+        <div class="qsubr"><span>未稅小計</span><span class="v">58,000</span></div>
+        <p style="font-size:12.5px;color:var(--gray);margin-top:14px;line-height:1.65">官網翻新為選配加價購項目，可與主系統一起做，或日後再加購。</p>
+      </div>
     </div>
-    <p class="qnote reveal" style="transition-delay:.2s">報價含設計、開發、雲端部署、上線與操作教學交付　·　有效期限 30 天　·　付款方式可議</p>
+    <div class="qgrand reveal" style="transition-delay:.18s">
+      <span class="l">兩案合計 · 含稅總計<small>主系統 105,000　＋　加價購 60,900（均含 5% 營業稅）</small></span>
+      <span class="v"><small>NT$</small>165,900</span>
+    </div>
+    <p class="qnote reveal" style="transition-delay:.22s">未稅合計 158,000　·　營業稅 5% 7,900　·　報價有效期限 30 天　·　付款方式可議</p>
   </div>
 </section>
 
