@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>美強光廣告科技｜AI 收稿＆客服系統 — 提案</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%231a1a1a'/%3E%3Cpath d='M37 8 L20 36 L32 36 L28 56 L46 30 L34 30 Z' fill='%23ffce00'/%3E%3C/svg%3E">
-<meta name="description" content="美強光廣告科技 AI 收稿＆客服系統提案 — 客戶自助上傳、AI 檢查檔名、自動產生工單、管理後台。特色功能、一個月時程與報價。萊乾資訊 LaiQuan。">
+<meta name="description" content="美強光廣告科技 AI 收稿＆客服系統提案 — 客戶自助上傳、AI 檢查檔名、自動產生工單、管理後台。收稿系統＋官網翻新完整方案，兩個月兩階段交付。萊乾資訊 LaiQuan。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -169,6 +169,15 @@
   .tl .step.mile .what b{color:var(--ink);font-weight:800;}
   .tl .tag{display:inline-block;font-size:11px;font-weight:700;color:var(--yellow);background:var(--ink);border-radius:999px;padding:1px 10px;margin-left:8px;vertical-align:middle;}
 
+  /* 兩個月：雙欄時程 */
+  .tl2{display:grid;grid-template-columns:1fr 1fr;gap:clamp(20px,3.4vw,44px);margin-top:34px;text-align:left;max-width:1020px;margin-left:auto;margin-right:auto;}
+  @media(max-width:760px){.tl2{grid-template-columns:1fr;gap:26px;}}
+  .tl2 .tl{margin-top:6px;max-width:100%;}
+  .tl2 .tl .step{grid-template-columns:104px 1fr;padding:12px 4px;}
+  .tl2 .tl .step.mile{padding:12px 14px;}
+  .tl-h{font-family:var(--display);font-size:15px;font-weight:800;padding-bottom:9px;border-bottom:2.5px solid var(--ink);display:flex;justify-content:space-between;align-items:baseline;gap:10px;}
+  .tl-h small{font-weight:600;color:var(--gray);font-size:12px;white-space:nowrap;}
+
   /* quote */
   .qlist{margin-top:36px;text-align:left;max-width:680px;margin-left:auto;margin-right:auto;}
   .qrow{display:flex;justify-content:space-between;align-items:baseline;gap:20px;padding:13px 0;border-bottom:1px solid var(--line);}
@@ -257,7 +266,7 @@
     <div class="eyebrow reveal">美強光廣告科技　·　系統提案</div>
     <h1 class="reveal" style="transition-delay:.06s">AI 收稿<br>＆客服系統</h1>
     <p class="lead reveal" style="transition-delay:.12s">客戶自助上傳印刷檔，AI 自動檢查檔名、<br>格式正確才收件，並自動產生工單。</p>
-    <p class="fine reveal" style="transition-delay:.2s">為 美強光廣告科技 量身打造　·　一個月完工上線　·　萊乾資訊 LaiQuan 承製</p>
+    <p class="fine reveal" style="transition-delay:.2s">為 美強光廣告科技 量身打造　·　兩個月完整交付　·　萊乾資訊 LaiQuan 承製</p>
   </div>
   <div class="scrollhint reveal" style="transition-delay:.3s">Scroll<span class="chev"></span></div>
 </section>
@@ -328,15 +337,16 @@
       <div class="cell"><div class="k">新人快速接手</div><div class="d">打開案件就看得到完整脈絡，不必從頭問客戶「上次是怎麼做的」。</div></div>
       <div class="cell"><div class="k">離職不流失</div><div class="d">知識不再綁在特定員工身上，人員異動不用重新培訓、重新建立關係。</div></div>
     </div>
-    <p class="fine reveal" style="transition-delay:.2s">＊更進一步的「AI 學習客戶偏好並主動推薦」屬加價購的會員系統，見後續章節。</p>
+    <p class="fine reveal" style="transition-delay:.2s">＊更進一步的「AI 學習客戶偏好並主動推薦」屬本方案第二部分的會員系統，見後續章節。</p>
   </div>
 </section>
 
 <!-- 5 FEATURES -->
 <section class="slide alt" id="s5" data-label="核心功能">
   <div class="inner wide">
-    <div class="eyebrow reveal">核心功能</div>
+    <div class="eyebrow reveal">核心功能 · 第一部分</div>
     <h2 class="reveal" style="transition-delay:.05s">一套系統，六件事做到底。</h2>
+    <p class="lead reveal" style="transition-delay:.08s;font-size:16px;margin-top:14px">完整方案分兩部分：<b style="color:var(--ink)">AI 收稿系統</b>（以下六項）＋<b style="color:var(--ink)">官網翻新</b>（見後續章節）。</p>
     <div class="grid g3 reveal" style="transition-delay:.12s">
       <div class="cell"><div class="num">01</div><div class="k">檔名智慧檢查</div><div class="d">依貴公司命名規則即時驗證，缺哪段、錯哪段精準指出，AI 親切引導客戶改到對為止。</div></div>
       <div class="cell"><div class="num">02</div><div class="k">ERP 商品自動帶入</div><div class="d">串接 699 筆印刷商品主檔，依商品編號自動帶出正確品名（高遮PVC+霧⋯），免人工對照。</div></div>
@@ -470,25 +480,40 @@
 <section class="slide" id="s11" data-label="時間表">
   <div class="inner wide">
     <div class="eyebrow reveal">執行時間表</div>
-    <h2 class="reveal" style="transition-delay:.05s">一個月，完工上線。</h2>
-    <div class="tl reveal" style="transition-delay:.12s">
-      <div class="step"><span class="when">第 1 週</span><span class="what">需求確認與流程盤點<small>確認命名規則、匯入 ERP 商品／加工主檔</small></span></div>
-      <div class="step"><span class="when">第 2 週</span><span class="what">線上收稿前台 + 檔名智慧驗證引擎<small>AI 引導、拖曳多檔上傳、聯絡表單與記憶</small></span></div>
-      <div class="step mile"><span class="when">第 2 週末</span><span class="what"><b>交付測試版</b><span class="tag">里程碑</span><small>供現場實際試收稿、驗收體驗</small></span></div>
-      <div class="step"><span class="when">第 3 週</span><span class="what">自動工單 + 管理後台<small>工單產生與列印、多帳號、對話紀錄、案件管理</small></span></div>
-      <div class="step"><span class="when">第 4 週</span><span class="what">整合測試 · 部署上線 · 操作教學<small>端到端驗收、正式網址啟用、現場教學交付</small></span></div>
-      <div class="step mile"><span class="when">第 4 週末</span><span class="what"><b>正式上線</b><span class="tag">里程碑</span><small>啟用正式站，開始線上收稿</small></span></div>
+    <h2 class="reveal" style="transition-delay:.05s">兩個月，兩階段交付。</h2>
+    <div class="tl2 reveal" style="transition-delay:.12s">
+      <div>
+        <div class="tl-h">第一個月 · AI 收稿系統 <small>第 1–4 週</small></div>
+        <div class="tl">
+          <div class="step"><span class="when">第 1 週</span><span class="what">需求確認與流程盤點<small>確認命名規則、匯入 ERP 商品／加工主檔</small></span></div>
+          <div class="step"><span class="when">第 2 週</span><span class="what">收稿前台 + 檔名驗證引擎<small>AI 引導、拖曳多檔上傳、聯絡表單與記憶</small></span></div>
+          <div class="step mile"><span class="when">第 2 週末</span><span class="what"><b>交付測試版</b><span class="tag">里程碑</span><small>供現場實際試收稿</small></span></div>
+          <div class="step"><span class="when">第 3 週</span><span class="what">自動工單 + 管理後台<small>工單產生與列印、多帳號、對話紀錄</small></span></div>
+          <div class="step"><span class="when">第 4 週</span><span class="what">整合測試 · 部署 · 操作教學<small>端到端驗收、正式網址啟用</small></span></div>
+          <div class="step mile"><span class="when">第 4 週末</span><span class="what"><b>收稿系統上線</b><span class="tag">里程碑</span><small>開始線上收稿</small></span></div>
+        </div>
+      </div>
+      <div>
+        <div class="tl-h">第二個月 · 官網翻新 <small>第 5–8 週</small></div>
+        <div class="tl">
+          <div class="step"><span class="when">第 5 週</span><span class="what">官網改版設計定版<small>版型、品牌識別、商品架構規劃</small></span></div>
+          <div class="step"><span class="when">第 6 週</span><span class="what">商品頁 + 商品 AI 客服<small>每個商品一顆 AI 客服按鈕、助手接管</small></span></div>
+          <div class="step"><span class="when">第 7 週</span><span class="what">會員系統 + AI 24 小時報價<small>記住會員喜好、依商品與才數即時估價</small></span></div>
+          <div class="step"><span class="when">第 8 週</span><span class="what">智慧 EDM · 整合測試 · 上線教學<small>自動寄送特別資訊、端到端驗收</small></span></div>
+          <div class="step mile"><span class="when">第 8 週末</span><span class="what"><b>官網正式上線</b><span class="tag">里程碑</span><small>完整方案交付</small></span></div>
+        </div>
+      </div>
     </div>
-    <p class="fine reveal" style="transition-delay:.2s">＊實際起訖日以雙方簽約後確認為準，總期程約一個月（四週）。</p>
+    <p class="fine reveal" style="transition-delay:.2s">＊實際起訖日以雙方簽約後確認為準，總期程約兩個月（八週），分兩階段交付。</p>
   </div>
 </section>
 
 <!-- 11b ADD-ON: 官網翻新 -->
-<section class="slide tint" id="s11b" data-label="加價購 · 官網翻新">
+<section class="slide tint" id="s11b" data-label="方案第二部分 · 官網翻新">
   <div class="inner wide">
-    <div class="eyebrow reveal">加價購方案 · 選配</div>
-    <h2 class="reveal" style="transition-delay:.05s">順手，把官網一起翻新。</h2>
-    <p class="lead reveal" style="transition-delay:.1s">除了收稿系統，也能幫你把品牌官網一起升級 —— 讓每個商品都會「說話」、記得住每位會員，連報價都 24 小時不打烊。</p>
+    <div class="eyebrow reveal">完整方案 · 第二部分</div>
+    <h2 class="reveal" style="transition-delay:.05s">官網，也一起翻新。</h2>
+    <p class="lead reveal" style="transition-delay:.1s">本方案不只收稿系統 —— 品牌官網一併升級：讓每個商品都會「說話」、記得住每位會員，連報價都 24 小時不打烊。</p>
     <div class="pv-wrap" style="margin-top:40px">
       <div class="pcard reveal" aria-hidden="true">
         <div class="pimg">🖼️</div>
@@ -512,7 +537,7 @@
           <li><b>智慧 EDM</b>：AI 依會員喜好，不定期自動寄送 email 特別資訊與優惠，主動把客人帶回來。</li>
           <li><b>AI 24 小時報價</b>：客人半夜問價也能即時得到估價，依商品與尺寸／才數自動算，不必等上班。</li>
         </ul>
-        <span class="pchip reveal" style="transition-delay:.16s">加價購 NT$58,000<small>未稅 · 含稅 60,900</small></span>
+        <span class="pchip reveal" style="transition-delay:.16s">✓ 本方案已包含<small>不需另外加價</small></span>
       </div>
     </div>
   </div>
@@ -525,7 +550,7 @@
     <h2 class="reveal" style="transition-delay:.05s">一次到位的投資。</h2>
     <div class="qcols reveal" style="transition-delay:.12s">
       <div>
-        <div class="qhead">主系統 · AI 收稿系統 <small>未稅</small></div>
+        <div class="qhead">第一部分 · AI 收稿系統 <small>未稅</small></div>
         <div class="qrow"><span class="l">系統規劃與需求分析</span><span class="v">10,000</span></div>
         <div class="qrow"><span class="l">線上收稿前台</span><span class="v">22,000</span></div>
         <div class="qrow"><span class="l">檔名驗證引擎 ＋ ERP 主檔整合</span><span class="v">24,000</span></div>
@@ -536,17 +561,17 @@
         <div class="qsubr"><span>未稅小計</span><span class="v">100,000</span></div>
       </div>
       <div>
-        <div class="qhead">加價購 · 官網翻新 <small>選配</small></div>
+        <div class="qhead">第二部分 · 官網翻新 <small>未稅</small></div>
         <div class="qrow"><span class="l">商品 AI 客服按鈕 · AI 助手接管</span><span class="v" style="color:var(--ok)">✓</span></div>
         <div class="qrow"><span class="l">會員系統 · AI 記住會員喜好</span><span class="v" style="color:var(--ok)">✓</span></div>
         <div class="qrow"><span class="l">智慧 EDM · AI 不定期寄特別資訊</span><span class="v" style="color:var(--ok)">✓</span></div>
         <div class="qrow"><span class="l">AI 24 小時線上報價</span><span class="v" style="color:var(--ok)">✓</span></div>
         <div class="qsubr"><span>未稅小計</span><span class="v">58,000</span></div>
-        <p style="font-size:12.5px;color:var(--gray);margin-top:14px;line-height:1.65">官網翻新為選配加價購項目，可與主系統一起做，或日後再加購。</p>
+        <p style="font-size:12.5px;color:var(--gray);margin-top:14px;line-height:1.65">兩部分為同一套完整方案，第一個月交付收稿系統、第二個月交付官網。</p>
       </div>
     </div>
     <div class="qgrand reveal" style="transition-delay:.18s">
-      <span class="l">兩案合計 · 含稅總計<small>主系統 105,000　＋　加價購 60,900（均含 5% 營業稅）</small></span>
+      <span class="l">完整方案 · 含稅總計<small>未稅 158,000　＋　5% 營業稅 7,900　·　兩部分一次到位</small></span>
       <span class="v"><small>NT$</small>165,900</span>
     </div>
     <p class="qnote reveal" style="transition-delay:.22s">未稅合計 158,000　·　營業稅 5% 7,900　·　報價有效期限 30 天　·　付款方式可議</p>
