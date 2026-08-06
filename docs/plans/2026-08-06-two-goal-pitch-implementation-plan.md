@@ -2,7 +2,7 @@
 
 > **For Claude:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task.
 
-**Goal:** Rewrite the full Nina pitch deck around reducing customer communication time and reducing employee handover/training time while presenting the website and AI intake capabilities as one integrated system.
+**Goal:** Rewrite the full Nina pitch deck around reducing customer communication time and reducing employee handover/training time while presenting all capabilities as one integrated product named 美強光 AI 數位系統.
 
 **Architecture:** Keep the existing single-file static deck and its visual system. Update the metadata and all 16 slide narratives in `index.html`, preserving the existing DOM classes and interactive script so the change remains content-focused and low risk.
 
