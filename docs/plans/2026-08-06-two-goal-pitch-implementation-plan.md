@@ -37,9 +37,11 @@
 
 **Step 1:** Rename the two quote columns as goal-based build categories within one system.
 
-**Step 2:** Preserve the approved subtotal, tax, total, and 50/50 payment terms.
+**Step 2:** Present only the approved untaxed total of `165,000` and preserve the 50/50 payment terms.
 
 **Step 3:** Present seven construction items under each goal, using customer service summaries rather than a separate training-view feature under goal two.
+
+**Step 4:** Remove secondary labels, checkmarks, explanatory copy, and the tax breakdown; enlarge service rows and reduce the total-bar and price emphasis.
 
 ### Task 4: Verify and publish
 
