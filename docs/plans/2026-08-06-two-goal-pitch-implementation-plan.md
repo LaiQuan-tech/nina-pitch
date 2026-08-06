@@ -28,6 +28,8 @@
 
 **Step 2:** Organize weeks 5–8 around customer knowledge retention, handover, integration, training, and launch.
 
+**Step 3:** Add a week-six milestone named `客戶知識庫測試版` with the description `可查詢客戶樣貌、偏好與完整服務脈絡`.
+
 ### Task 3: Consolidate the quote narrative
 
 **Files:**
