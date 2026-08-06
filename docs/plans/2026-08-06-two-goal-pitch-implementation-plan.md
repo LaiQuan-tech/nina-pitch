@@ -37,6 +37,8 @@
 
 **Step 2:** Preserve the approved subtotal, tax, total, and 50/50 payment terms.
 
+**Step 3:** Present seven construction items under each goal, using customer service summaries rather than a separate training-view feature under goal two.
+
 ### Task 4: Verify and publish
 
 **Files:**
