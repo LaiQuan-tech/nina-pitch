@@ -1,2 +1,5 @@
 .vercel
 .env*
+
+# local editor / agent config
+/.claude

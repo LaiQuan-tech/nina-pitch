@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>美強光廣告科技｜美強光 AI 數位系統 — 提案</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%231a1a1a'/%3E%3Cpath d='M37 8 L20 36 L32 36 L28 56 L46 30 L34 30 Z' fill='%23ffce00'/%3E%3C/svg%3E">
-<meta name="description" content="美強光 AI 數位系統提案 — 以 AI 客服、AI 收稿、即時報價、客戶記憶、自動工單與公司知識後台，減少客戶來回溝通時間，並減輕員工交接與培訓負擔。八週整合交付。萊乾資訊 LaiQuan。">
+<meta name="description" content="美強光 AI 數位系統提案 — 以 AI 客服、AI 收稿、即時報價、客戶記憶、自動工單與公司知識後台，減少客戶來回溝通時間，並減輕員工交接與培訓負擔。17 個模組、三個月分三期整合交付。萊乾資訊 LaiQuan。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -169,7 +169,25 @@
   .tl .step.mile .what b{color:var(--ink);font-weight:800;}
   .tl .tag{display:inline-block;font-size:11px;font-weight:700;color:var(--yellow);background:var(--ink);border-radius:999px;padding:1px 10px;margin-left:8px;vertical-align:middle;}
 
-  /* 八週：雙目標時程 */
+  /* 系統範圍：分期模組清單 */
+  .cell .mods{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-direction:column;gap:7px;}
+  .cell .mods li{font-size:14px;color:var(--ink);line-height:1.45;padding-left:18px;position:relative;font-weight:500;}
+  .cell .mods li::before{content:"";position:absolute;left:0;top:6px;width:8px;height:8px;border-radius:3px;background:var(--yellow);border:1.5px solid var(--ink);}
+  .cell .mods li small{display:block;font-size:12px;color:var(--gray2);font-weight:400;margin-top:2px;line-height:1.4;}
+  .cell .ph{font-family:var(--display);font-size:12px;font-weight:800;color:var(--gray2);letter-spacing:.08em;margin-bottom:2px;}
+  /* 範圍頁的三欄內容較密，比其他 g3 早一點收窄 */
+  @media(max-width:980px){#s10b .grid.g3{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:600px){#s10b .grid.g3{grid-template-columns:1fr;}}
+
+  /* 三個月：分期時程（三欄，窄螢幕自動疊起來）*/
+  .tl3{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(18px,2.6vw,32px);margin-top:34px;text-align:left;max-width:1120px;margin-left:auto;margin-right:auto;}
+  @media(max-width:1000px){.tl3{grid-template-columns:1fr 1fr;}}
+  @media(max-width:700px){.tl3{grid-template-columns:1fr;gap:26px;}}
+  .tl3 .tl{margin-top:6px;max-width:100%;}
+  .tl3 .tl .step{grid-template-columns:86px 1fr;padding:11px 4px;}
+  .tl3 .tl .step.mile{padding:11px 12px;}
+  .tl3 .tl .what small{font-size:12px;}
+
   .tl2{display:grid;grid-template-columns:1fr 1fr;gap:clamp(20px,3.4vw,44px);margin-top:34px;text-align:left;max-width:1020px;margin-left:auto;margin-right:auto;}
   @media(max-width:760px){.tl2{grid-template-columns:1fr;gap:26px;}}
   .tl2 .tl{margin-top:6px;max-width:100%;}
@@ -225,6 +243,14 @@
   .qhead{font-family:var(--display);font-size:17px;font-weight:800;color:var(--ink);padding-bottom:12px;border-bottom:2.5px solid var(--ink);}
   .qcols .qrow{padding:10px 0;}
   .qcols .qrow .l{font-size:16px;font-weight:600;}
+  /* 三期報價：一期一欄，不必用「（續）」把同一期拆兩邊 */
+  .qcols.q3{grid-template-columns:repeat(3,1fr);gap:clamp(20px,2.8vw,36px);}
+  @media(max-width:900px){.qcols.q3{grid-template-columns:1fr 1fr;}}
+  @media(max-width:640px){.qcols.q3{grid-template-columns:1fr;}}
+  .qcols.q3 .qhead{display:flex;flex-direction:column;gap:3px;font-size:16px;}
+  .qcols.q3 .qhead small{font-size:12px;font-weight:600;color:var(--gray2);letter-spacing:.02em;}
+  .qcols.q3 .qrow{padding:9px 0;}
+  .qcols.q3 .qrow .l{font-size:15px;}
   .qgrand{display:flex;justify-content:space-between;align-items:center;gap:18px;margin-top:18px;padding:10px 18px;background:var(--ink);color:#fff;border-radius:12px;box-shadow:4px 5px 0 rgba(26,26,26,.16);}
   .qgrand .l{font-family:var(--display);font-size:14px;font-weight:700;}
   .qgrand .v{font-family:var(--display);font-size:clamp(24px,3vw,32px);font-weight:800;color:var(--yellow);font-variant-numeric:tabular-nums;white-space:nowrap;}
@@ -261,7 +287,7 @@
     <div class="eyebrow reveal">美強光廣告科技　·　系統提案</div>
     <h1 class="reveal" style="transition-delay:.06s">美強光<br>AI 數位系統</h1>
     <p class="lead reveal" style="transition-delay:.12s">把客戶反覆詢問、報價與收稿交給 AI，<br>把客戶樣貌、偏好與經驗留在公司。</p>
-    <p class="fine reveal" style="transition-delay:.2s">一套整合系統　·　兩大經營目標　·　八週完整交付　·　萊乾資訊 LaiQuan 承製</p>
+    <p class="fine reveal" style="transition-delay:.2s">一套整合系統　·　17 個模組　·　三個月分三期交付　·　萊乾資訊 LaiQuan 承製</p>
   </div>
   <div class="scrollhint reveal" style="transition-delay:.3s">Scroll<span class="chev"></span></div>
 </section>
@@ -339,7 +365,7 @@
 <!-- 5 FEATURES -->
 <section class="slide alt" id="s5" data-label="核心功能">
   <div class="inner wide">
-    <div class="eyebrow reveal">一套系統 · 六個核心能力</div>
+    <div class="eyebrow reveal">核心能力 · 六大重點</div>
     <h2 class="reveal" style="transition-delay:.05s">從第一次詢問，<br>一路記到下一次下單。</h2>
     <p class="lead reveal" style="transition-delay:.08s;font-size:16px;margin-top:14px">官網、AI 客服、智慧收稿、客戶記憶、工單與後台共用同一份資料，完整服務兩大目標。</p>
     <div class="grid g3 reveal" style="transition-delay:.12s">
@@ -472,35 +498,93 @@
 </section>
 
 <!-- 11 TIMELINE -->
+<!-- 10b SCOPE -->
+<section class="slide" id="s10b" data-label="系統範圍">
+  <div class="inner wide">
+    <div class="eyebrow reveal">系統範圍 · 17 個模組</div>
+    <h2 class="reveal" style="transition-delay:.05s">從客戶下單，<br>做到司機出車。</h2>
+    <p class="lead reveal" style="transition-delay:.08s;font-size:16px;margin-top:14px">全部整合在同一套系統、共用同一份資料，依三個階段分期交付。</p>
+    <div class="grid g3 reveal" style="transition-delay:.12s;margin-top:34px">
+      <div class="cell">
+        <div class="num">01</div>
+        <div class="ph">第 1 個月</div>
+        <div class="k">基礎 · 收稿 · 報價</div>
+        <ul class="mods">
+          <li>會員系統<small>註冊登入、客戶身分整合</small></li>
+          <li>產品資料庫、客戶檔案資料庫<small>商品主檔、材質規格、往來與偏好</small></li>
+          <li>內部 FTP<small>大檔收檔，24 小時不打烊</small></li>
+          <li>AI 設計工單<small>檔名解析、規格拆解、工單自動產生</small></li>
+          <li>AI 報價單<small>依材質、尺寸與才數即時估價</small></li>
+          <li>AI 客服（可上傳照片）<small>客戶拍現場照，AI 直接判讀需求</small></li>
+        </ul>
+      </div>
+      <div class="cell">
+        <div class="num">02</div>
+        <div class="ph">第 2 個月</div>
+        <div class="k">下單 · 金流 · 派工</div>
+        <ul class="mods">
+          <li>AI 官網下單<small>購物車、合併下單、逾期自動清空、鎖單</small></li>
+          <li>金流系統<small>線上刷卡與自動對帳</small></li>
+          <li>LINE 官方帳號<small>可直接收客戶檔案、查進度</small></li>
+          <li>派工系統<small>依材質自動分單到對應機台</small></li>
+          <li>庫存管理系統<small>材料進出與安全庫存警示</small></li>
+        </ul>
+      </div>
+      <div class="cell">
+        <div class="num">03</div>
+        <div class="ph">第 3 個月</div>
+        <div class="k">物流 · 管理 · 曝光</div>
+        <ul class="mods">
+          <li>出貨系統、收貨系統<small>進料驗收入庫、包裝單據與交貨確認</small></li>
+          <li>司機撿貨系統<small>撿貨清單與配送路線</small></li>
+          <li>內部客服人員 AI 幫手<small>員工查規格、查歷史、擬回覆</small></li>
+          <li>後台管理 Dashboard<small>營運數字一頁看完</small></li>
+          <li>工作天公告<small>交期與休假一次公告</small></li>
+          <li>AI SEO<small>商品頁自動優化，讓客戶搜得到</small></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="slide" id="s11" data-label="時間表">
   <div class="inner wide">
     <div class="eyebrow reveal">執行時間表</div>
-    <h2 class="reveal" style="transition-delay:.05s">八週，完成一套系統、<br>兩個目標。</h2>
-    <div class="tl2 reveal" style="transition-delay:.12s">
+    <!-- 標題避開「每一期都有東西上線」：那幾個字的中間橫劃會連成一條線，看起來像刪除線 -->
+    <h2 class="reveal" style="transition-delay:.05s">三個月，分三期。<br>做完一塊，就交付一塊。</h2>
+    <div class="tl3 reveal" style="transition-delay:.12s">
       <div>
-        <div class="tl-h">目標一 · 溝通自動化 <small>第 1–4 週</small></div>
+        <div class="tl-h">第 1 期 <small>第 1 個月</small></div>
         <div class="tl">
-          <div class="step"><span class="when">第 1 週</span><span class="what">溝通流程與資料盤點<small>整理常見問題、報價邏輯、檔名規則與 ERP 主檔</small></span></div>
-          <div class="step"><span class="when">第 2 週</span><span class="what">AI 官網與客服入口<small>商品架構、AI 問答、需求引導與會員入口</small></span></div>
-          <div class="step mile"><span class="when">第 2 週末</span><span class="what"><b>溝通流程原型</b><span class="tag">里程碑</span><small>確認客戶從詢問到送件的體驗</small></span></div>
-          <div class="step"><span class="when">第 3 週</span><span class="what">AI 報價與智慧收稿<small>即時估價、多檔上傳、檔名驗證與修正引導</small></span></div>
-          <div class="step"><span class="when">第 4 週</span><span class="what">ERP 串接與自動工單<small>商品對應、工單產生列印與管理後台</small></span></div>
-          <div class="step mile"><span class="when">第 4 週末</span><span class="what"><b>溝通自動化測試版</b><span class="tag">里程碑</span><small>供現場實際測試完整流程</small></span></div>
+          <div class="step"><span class="when">第 1 週</span><span class="what">資料盤點與資料庫建置<small>產品主檔、客戶檔案、材質規格整理入庫</small></span></div>
+          <div class="step"><span class="when">第 2 週</span><span class="what">會員系統與內部 FTP<small>註冊登入、身分整合、大檔 24 小時收檔</small></span></div>
+          <div class="step"><span class="when">第 3 週</span><span class="what">AI 設計工單<small>檔名解析、規格拆解、工單自動產生與列印</small></span></div>
+          <div class="step"><span class="when">第 4 週</span><span class="what">AI 報價單與 AI 客服<small>即時估價；客戶可上傳現場照片讓 AI 判讀</small></span></div>
+          <div class="step mile"><span class="when">第 1 期末</span><span class="what"><b>詢價到收稿上線</b><span class="tag">里程碑</span><small>客戶線上問價、發稿，工單不再手 key</small></span></div>
         </div>
       </div>
       <div>
-        <div class="tl-h">目標二 · 客戶知識資產化 <small>第 5–8 週</small></div>
+        <div class="tl-h">第 2 期 <small>第 2 個月</small></div>
         <div class="tl">
-          <div class="step"><span class="when">第 5 週</span><span class="what">會員與客戶樣貌記憶<small>整合身份、偏好、常用商品與歷史互動</small></span></div>
-          <div class="step"><span class="when">第 6 週</span><span class="what">公司知識與交接後台<small>對話、報價、稿件、工單與服務脈絡集中呈現</small></span></div>
-          <div class="step mile"><span class="when">第 6 週末</span><span class="what"><b>客戶知識庫測試版</b><span class="tag">里程碑</span><small>可查詢客戶樣貌、偏好與完整服務脈絡</small></span></div>
-          <div class="step"><span class="when">第 7 週</span><span class="what">全系統整合與情境驗收<small>以詢問、收稿、回訪與員工交接情境完整測試</small></span></div>
-          <div class="step"><span class="when">第 8 週</span><span class="what">資料整理 · 權限設定 · 團隊培訓<small>正式資料導入、操作手冊與交接流程演練</small></span></div>
-          <div class="step mile"><span class="when">第 8 週末</span><span class="what"><b>美強光 AI 數位系統上線</b><span class="tag">里程碑</span><small>一套系統完整交付</small></span></div>
+          <div class="step"><span class="when">第 5 週</span><span class="what">AI 官網下單<small>購物車、合併下單、逾期自動清空、鎖單</small></span></div>
+          <div class="step"><span class="when">第 6 週</span><span class="what">金流系統<small>線上刷卡、對帳與收款狀態</small></span></div>
+          <div class="step"><span class="when">第 7 週</span><span class="what">LINE 官方帳號<small>客戶直接用 LINE 傳檔、查進度</small></span></div>
+          <div class="step"><span class="when">第 8 週</span><span class="what">派工與庫存<small>依材質自動分單；材料進出與安全庫存警示</small></span></div>
+          <div class="step mile"><span class="when">第 2 期末</span><span class="what"><b>線上成交閉環</b><span class="tag">里程碑</span><small>從詢價到收款、派工不需人工轉單</small></span></div>
+        </div>
+      </div>
+      <div>
+        <div class="tl-h">第 3 期 <small>第 3 個月</small></div>
+        <div class="tl">
+          <div class="step"><span class="when">第 9 週</span><span class="what">收貨與出貨系統<small>進料驗收入庫、包裝單據與交貨確認</small></span></div>
+          <div class="step"><span class="when">第 10 週</span><span class="what">司機撿貨系統<small>撿貨清單與配送路線</small></span></div>
+          <div class="step"><span class="when">第 11 週</span><span class="what">內部 AI 幫手 · Dashboard · 工作天公告 · AI SEO<small>員工查詢、營運數字、交期公告與商品頁優化</small></span></div>
+          <div class="step"><span class="when">第 12 週</span><span class="what">整合驗收 · 資料導入 · 團隊培訓<small>正式資料上線、操作手冊與交接演練</small></span></div>
+          <div class="step mile"><span class="when">第 3 期末</span><span class="what"><b>美強光 AI 數位系統完整上線</b><span class="tag">里程碑</span><small>17 個模組整合交付</small></span></div>
         </div>
       </div>
     </div>
-    <p class="fine reveal" style="transition-delay:.2s">＊實際起訖日以雙方簽約後確認為準，總期程約八週；所有功能整合在同一套系統中交付。</p>
+    <p class="fine reveal" style="transition-delay:.2s">＊實際起訖日以雙方簽約後確認為準，總期程約三個月（十二週）；每一期結束即交付可實際使用的功能，不必等到最後才看到成果。</p>
   </div>
 </section>
 
@@ -543,34 +627,40 @@
 <section class="slide" id="s12" data-label="報價">
   <div class="inner wide">
     <div class="eyebrow reveal">報價</div>
-    <h2 class="reveal" style="transition-delay:.05s">一套系統，<br>完成兩個目標。</h2>
-    <div class="qcols reveal" style="transition-delay:.12s">
+    <h2 class="reveal" style="transition-delay:.05s">一套系統，<br>17 個模組。</h2>
+    <div class="qcols q3 reveal" style="transition-delay:.12s">
       <div>
-        <div class="qhead">目標一 · 減少溝通時間</div>
-        <div class="qrow"><span class="l">系統規劃與溝通流程分析</span></div>
-        <div class="qrow"><span class="l">AI 官網與商品服務入口</span></div>
-        <div class="qrow"><span class="l">AI 客服、報價與檔名驗證引擎</span></div>
-        <div class="qrow"><span class="l">AI 收稿、ERP 串接與自動工單</span></div>
-        <div class="qrow"><span class="l">整合管理後台</span></div>
-        <div class="qrow"><span class="l">雲端資料庫與檔案儲存建置</span></div>
-        <div class="qrow"><span class="l">部署上線與測試交付</span></div>
+        <div class="qhead">第 1 期 <small>基礎 · 收稿 · 報價</small></div>
+        <div class="qrow"><span class="l">會員系統</span></div>
+        <div class="qrow"><span class="l">產品資料庫、客戶檔案資料庫</span></div>
+        <div class="qrow"><span class="l">內部 FTP</span></div>
+        <div class="qrow"><span class="l">AI 設計工單</span></div>
+        <div class="qrow"><span class="l">AI 報價單</span></div>
+        <div class="qrow"><span class="l">AI 客服（可上傳照片）</span></div>
       </div>
       <div>
-        <div class="qhead">目標二 · 減輕交接與培訓</div>
-        <div class="qrow"><span class="l">會員系統與客戶身份整合</span></div>
-        <div class="qrow"><span class="l">AI 客戶樣貌與偏好記憶</span></div>
-        <div class="qrow"><span class="l">客戶對話與需求紀錄</span></div>
-        <div class="qrow"><span class="l">報價、稿件與工單知識庫</span></div>
-        <div class="qrow"><span class="l">歷史案件快速查詢</span></div>
-        <div class="qrow"><span class="l">客戶服務重點自動摘要</span></div>
-        <div class="qrow"><span class="l">智慧客戶追蹤與回訪提醒</span></div>
+        <div class="qhead">第 2 期 <small>下單 · 金流 · 派工</small></div>
+        <div class="qrow"><span class="l">AI 官網下單<small>購物車 · 合併下單 · 逾期自動清空 · 鎖單</small></span></div>
+        <div class="qrow"><span class="l">金流系統</span></div>
+        <div class="qrow"><span class="l">LINE 官方帳號<small>可直接收客戶檔案</small></span></div>
+        <div class="qrow"><span class="l">派工系統<small>依材質自動分單</small></span></div>
+        <div class="qrow"><span class="l">庫存管理系統</span></div>
+      </div>
+      <div>
+        <div class="qhead">第 3 期 <small>物流 · 管理 · 曝光</small></div>
+        <div class="qrow"><span class="l">出貨系統、收貨系統</span></div>
+        <div class="qrow"><span class="l">司機撿貨系統</span></div>
+        <div class="qrow"><span class="l">內部客服人員 AI 幫手</span></div>
+        <div class="qrow"><span class="l">後台管理 Dashboard</span></div>
+        <div class="qrow"><span class="l">工作天公告</span></div>
+        <div class="qrow"><span class="l">AI SEO</span></div>
       </div>
     </div>
     <div class="qgrand reveal" style="transition-delay:.18s">
-      <span class="l">美強光 AI 數位系統 · 未稅總計</span>
-      <span class="v"><small>NT$</small>165,000</span>
+      <span class="l">美強光 AI 數位系統 · 含稅總計</span>
+      <span class="v"><small>NT$</small>2,000,000</span>
     </div>
-    <p class="qnote reveal" style="transition-delay:.22s">訂金 50%　／　尾款 50%</p>
+    <p class="qnote reveal" style="transition-delay:.22s">未稅 1,904,762　＋　5% 營業稅 95,238　·　依三期進度分期請款</p>
   </div>
 </section>
 
