@@ -187,6 +187,13 @@
   .tl3 .tl .step{grid-template-columns:86px 1fr;padding:11px 4px;}
   .tl3 .tl .step.mile{padding:11px 12px;}
   .tl3 .tl .what small{font-size:12px;}
+  /* 三欄等高：欄位本來就被 grid 拉齊，但內容靠上排，所以最長那一欄
+     （第 3 期「第 15 週」會折行）會把自己的里程碑推到比另外兩欄低。
+     讓 .tl 撐滿欄高、里程碑 margin-top:auto 沉到底，三個里程碑就對齊。
+     ⚠️ 不要改成固定 min-height 去湊——文案一改就又跑掉。 */
+  .tl3>div{display:flex;flex-direction:column;}
+  .tl3 .tl{flex:1;}
+  .tl3 .tl .step.mile{margin-top:auto;}
   /* 一期六列後在 1280x800 這種筆電高度會把最後一個里程碑推到摺線下，
      所以矮螢幕收緊行距（窄螢幕本來就疊成單欄可捲，不套用）。 */
   @media(min-width:1000px) and (max-height:900px){
@@ -196,6 +203,17 @@
     #s11 .tl3 .tl .step{padding:7px 4px;}
     #s11 .tl3 .tl .step.mile{padding:8px 12px;}
     #s11 .fine{margin-top:10px;}
+    /* s11b 併入原 s5 的六項後，1440x720 這種筆電高度會溢出約 130px，
+       第六項「公司知識後台」掉到摺線下。主要靠收緊間距，字級只微調
+       h2 60→54、lead 23→21。
+       ⚠️ 這整段只在 max-height:900px 生效，也就是筆電螢幕檢視時；
+       簡報現場 1080p 全螢幕不會套用，字級維持原尺寸。 */
+    #s11b .eyebrow{margin-bottom:8px;}
+    #s11b h2{font-size:54px;}
+    #s11b .lead{font-size:21px;margin-top:10px;}
+    #s11b .pv-wrap{margin-top:14px !important;}
+    #s11b .pv-side .why{gap:6px;margin:8px 0 8px;}
+    #s11b .pchip{padding:8px 18px;margin-top:2px;}
   }
 
   .tl2{display:grid;grid-template-columns:1fr 1fr;gap:clamp(20px,3.4vw,44px);margin-top:34px;text-align:left;max-width:1020px;margin-left:auto;margin-right:auto;}
@@ -326,13 +344,6 @@
 </section>
 
 <!-- 4 SOLUTION -->
-<section class="slide punch" id="s4" data-label="解法">
-  <div class="inner">
-    <div class="eyebrow reveal">一套整合系統</div>
-    <h2 class="reveal" style="transition-delay:.05s">一個入口，<br>把兩種時間都省下來。</h2>
-    <p class="lead reveal" style="transition-delay:.12s">客戶從官網詢問、取得報價、上傳檔案到完成收稿，都由 AI 先處理；每次互動同時累積成客戶資料與服務經驗，讓員工少花時間溝通，也讓下一位接手的人有完整脈絡。</p>
-  </div>
-</section>
 
 <!-- 4b 24 小時 -->
 <section class="slide" id="s4b" data-label="目標一 · 減少溝通">
@@ -373,18 +384,38 @@
 </section>
 
 <!-- 5 FEATURES -->
-<section class="slide alt" id="s5" data-label="核心功能">
+<section class="slide tint" id="s11b" data-label="核心能力">
   <div class="inner wide">
     <div class="eyebrow reveal">核心能力 · 六大重點</div>
-    <h2 class="reveal" style="transition-delay:.05s">從第一次詢問，<br>一路記到下一次下單。</h2>
-    <p class="lead reveal" style="transition-delay:.08s;font-size:16px;margin-top:14px">官網、AI 客服、智慧收稿、客戶記憶、工單與後台共用同一份資料，完整服務兩大目標。</p>
-    <div class="grid g3 reveal" style="transition-delay:.12s">
-      <div class="cell"><div class="num">01</div><div class="k">AI 客服</div><div class="d">依商品內容回答規格、用途與常見問題，24 小時先接住每一位客戶。</div></div>
-      <div class="cell"><div class="num">02</div><div class="k">AI 收稿</div><div class="d">客戶自助上傳，系統即時檢查檔名、指出錯誤並引導修正，格式正確才收件。</div></div>
-      <div class="cell"><div class="num">03</div><div class="k">AI 即時報價</div><div class="d">依商品、尺寸與才數快速估價，並依需求推薦合適材質，減少等待與反覆詢價。</div></div>
-      <div class="cell"><div class="num">04</div><div class="k">AI 客戶記憶</div><div class="d">整理每位客戶的樣貌、偏好、詢問與歷史案件，越互動越了解客戶。</div></div>
-      <div class="cell"><div class="num">05</div><div class="k">ERP 與自動工單</div><div class="d">串接商品主檔，依檔名拆解需求並產生可列印工單，避免人工重複輸入。</div></div>
-      <div class="cell"><div class="num">06</div><div class="k">公司知識後台</div><div class="d">多位員工共用完整客戶脈絡與工單紀錄，讓交接、培訓與後續追蹤都有依據。</div></div>
+    <h2 class="reveal" style="transition-delay:.05s">從第一次詢問開始，<br>AI 就在認識客戶。</h2>
+    <p class="lead reveal" style="transition-delay:.1s">官網不只是展示頁，而是整套系統的服務入口：AI 一邊回答、報價與收稿，一邊把客戶樣貌與服務經驗累積成公司的知識。</p>
+    <div class="pv-wrap" style="margin-top:40px">
+      <div class="pcard reveal" aria-hidden="true">
+        <div class="pimg">🖼️</div>
+        <div class="pinfo">
+          <div class="pname">高遮PVC+霧 · 大圖輸出</div>
+          <div class="pprice">NT$ 180 / 才</div>
+        </div>
+        <div class="pbtns">
+          <span class="pbtn cart">加入詢價</span>
+          <span class="pbtn ai">🤖 AI 客服</span>
+        </div>
+        <div class="pchat">
+          <div class="bub me" style="font-size:12px">這款貼室外會不會掉色？</div>
+          <div class="bub ok" style="font-size:12px">高遮PVC 抗 UV、防水，戶外可用 1–2 年 👍 需要我幫您估價嗎？</div>
+        </div>
+      </div>
+      <div class="pv-side">
+        <ul class="why reveal" style="transition-delay:.1s;margin-top:0">
+          <li><b>AI 客服</b>：每個商品都能即時解答規格、用途與常見問題，先把需求問清楚。</li>
+          <li><b>AI 即時報價</b>：依商品、尺寸與才數快速估價，客戶不必等員工逐筆回覆。</li>
+          <li><b>AI 收稿</b>：確認需求後直接引導送件、檢查檔名並建立工單，溝通不中斷。</li>
+          <li><b>AI 客戶記憶</b>：把偏好、對話與歷史案件留在公司，讓下一位員工能直接接手。</li>
+          <li><b>ERP 與自動工單</b>：串接商品主檔，依檔名拆解需求並產生可列印工單，避免人工重複輸入。</li>
+          <li><b>公司知識後台</b>：多位員工共用完整客戶脈絡與工單紀錄，讓交接、培訓與後續追蹤都有依據。</li>
+        </ul>
+        <span class="pchip reveal" style="transition-delay:.16s">✓ 同一套系統<small>從詢問一路連到交接</small></span>
+      </div>
     </div>
   </div>
 </section>
@@ -602,39 +633,6 @@
 </section>
 
 <!-- 11b INTEGRATED SYSTEM -->
-<section class="slide tint" id="s11b" data-label="整合系統">
-  <div class="inner wide">
-    <div class="eyebrow reveal">美強光 AI 數位系統</div>
-    <h2 class="reveal" style="transition-delay:.05s">從第一次詢問開始，<br>AI 就在認識客戶。</h2>
-    <p class="lead reveal" style="transition-delay:.1s">官網不只是展示頁，而是整套系統的服務入口：AI 一邊回答、報價與收稿，一邊把客戶樣貌與服務經驗累積成公司的知識。</p>
-    <div class="pv-wrap" style="margin-top:40px">
-      <div class="pcard reveal" aria-hidden="true">
-        <div class="pimg">🖼️</div>
-        <div class="pinfo">
-          <div class="pname">高遮PVC+霧 · 大圖輸出</div>
-          <div class="pprice">NT$ 180 / 才</div>
-        </div>
-        <div class="pbtns">
-          <span class="pbtn cart">加入詢價</span>
-          <span class="pbtn ai">🤖 AI 客服</span>
-        </div>
-        <div class="pchat">
-          <div class="bub me" style="font-size:12px">這款貼室外會不會掉色？</div>
-          <div class="bub ok" style="font-size:12px">高遮PVC 抗 UV、防水，戶外可用 1–2 年 👍 需要我幫您估價嗎？</div>
-        </div>
-      </div>
-      <div class="pv-side">
-        <ul class="why reveal" style="transition-delay:.1s;margin-top:0">
-          <li><b>AI 客服</b>：每個商品都能即時解答規格、用途與常見問題，先把需求問清楚。</li>
-          <li><b>AI 即時報價</b>：依商品、尺寸與才數快速估價，客戶不必等員工逐筆回覆。</li>
-          <li><b>AI 收稿</b>：確認需求後直接引導送件、檢查檔名並建立工單，溝通不中斷。</li>
-          <li><b>AI 客戶記憶</b>：把偏好、對話與歷史案件留在公司，讓下一位員工能直接接手。</li>
-        </ul>
-        <span class="pchip reveal" style="transition-delay:.16s">✓ 同一套系統<small>從詢問一路連到交接</small></span>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- 12 QUOTE -->
 <section class="slide" id="s12" data-label="報價">
