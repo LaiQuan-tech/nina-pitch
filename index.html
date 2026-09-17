@@ -44,11 +44,15 @@
   @media(max-width:640px){.topbar .links{display:none;}}
 
   /* dot nav */
-  .nav{position:fixed;top:50%;right:max(14px,2vw);transform:translateY(-50%);z-index:60;display:flex;flex-direction:column;gap:13px;align-items:flex-end;}
-  .nav button{position:relative;display:flex;align-items:center;cursor:pointer;background:none;border:0;padding:3px 0 3px 8px;}
-  .nav button::after{content:"";width:8px;height:8px;border-radius:999px;border:1.5px solid rgba(26,26,26,.32);background:transparent;
-    transition:transform .35s var(--ease),background .35s,border-color .35s;}
-  .nav button[data-active="true"]::after{background:var(--ink);border-color:var(--ink);transform:scale(1.6);}
+  .nav{position:fixed;top:50%;right:max(14px,2vw);transform:translateY(-50%);z-index:60;display:flex;flex-direction:column;gap:4px;align-items:flex-end;}
+  .nav button{position:relative;display:flex;align-items:center;cursor:pointer;background:none;border:0;padding:1px 0 1px 8px;}
+  /* 右側導覽：頁碼取代圓點（2026-09-17）。目前頁＝黑底黃字，其餘半透明墨色；hover 仍浮出標籤 */
+  .nav .num{font-family:var(--display);font-size:11px;font-weight:800;line-height:18px;min-width:24px;text-align:center;
+    color:rgba(26,26,26,.45);border:1.5px solid transparent;border-radius:999px;padding:0 5px;
+    transition:background .35s,color .35s,border-color .35s,transform .35s var(--ease);}
+  .nav button:hover .num,.nav button:focus-visible .num{border-color:var(--ink);color:var(--ink);}
+  .nav button[data-active="true"] .num{background:var(--ink);color:var(--yellow);border-color:var(--ink);transform:scale(1.12);}
+  @media(max-height:680px){.nav{gap:2px;} .nav button{padding:0 0 0 8px;} .nav .lbl{font-size:11px;padding:2px 9px;} .nav .num{font-size:10px;line-height:15px;min-width:20px;}}
   .nav .lbl{margin-right:11px;font-size:12px;font-weight:600;color:var(--ink);background:rgba(255,255,255,.9);backdrop-filter:blur(6px);
     -webkit-backdrop-filter:blur(6px);border:1.5px solid var(--ink);border-radius:999px;padding:3px 11px;white-space:nowrap;
     opacity:0;transform:translateX(6px);transition:opacity .25s,transform .25s;pointer-events:none;box-shadow:2px 3px 0 rgba(26,26,26,.16);}
@@ -873,7 +877,7 @@
     var b=document.createElement('button');
     b.type='button';
     b.setAttribute('aria-label','前往：'+(s.dataset.label||('第 '+(i+1)+' 頁')));
-    b.innerHTML='<span class="lbl">'+(s.dataset.label||(i+1))+'</span>';
+    b.innerHTML='<span class="lbl">'+(s.dataset.label||(i+1))+'</span><span class="num">'+(i+1)+'</span>';
     b.addEventListener('click',function(){ slides[i].scrollIntoView({behavior:'smooth'}); });
     dotsWrap.appendChild(b);
   });
