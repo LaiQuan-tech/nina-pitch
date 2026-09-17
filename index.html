@@ -44,20 +44,25 @@
   @media(max-width:640px){.topbar .links{display:none;}}
 
   /* dot nav */
-  .nav{position:fixed;top:50%;right:max(14px,2vw);transform:translateY(-50%);z-index:60;display:flex;flex-direction:column;gap:4px;align-items:flex-end;}
-  .nav button{position:relative;display:flex;align-items:center;cursor:pointer;background:none;border:0;padding:1px 0 1px 8px;}
-  /* 右側導覽：頁碼取代圓點（2026-09-17）。目前頁＝黑底黃字，其餘半透明墨色；hover 仍浮出標籤 */
-  .nav .num{font-family:var(--display);font-size:11px;font-weight:800;line-height:18px;min-width:24px;text-align:center;
-    color:rgba(26,26,26,.45);border:1.5px solid transparent;border-radius:999px;padding:0 5px;
-    transition:background .35s,color .35s,border-color .35s,transform .35s var(--ease);}
-  .nav button:hover .num,.nav button:focus-visible .num{border-color:var(--ink);color:var(--ink);}
-  .nav button[data-active="true"] .num{background:var(--ink);color:var(--yellow);border-color:var(--ink);transform:scale(1.12);}
-  @media(max-height:680px){.nav{gap:2px;} .nav button{padding:0 0 0 8px;} .nav .lbl{font-size:11px;padding:2px 9px;} .nav .num{font-size:10px;line-height:15px;min-width:20px;}}
+  .nav{position:fixed;top:50%;right:max(14px,2vw);transform:translateY(-50%);z-index:60;display:flex;flex-direction:column;gap:13px;align-items:flex-end;}
+  .nav button{position:relative;display:flex;align-items:center;cursor:pointer;background:none;border:0;padding:3px 0 3px 8px;}
+  .nav button::after{content:"";width:8px;height:8px;border-radius:999px;border:1.5px solid rgba(26,26,26,.32);background:transparent;
+    transition:transform .35s var(--ease),background .35s,border-color .35s;}
+  .nav button[data-active="true"]::after{background:var(--ink);border-color:var(--ink);transform:scale(1.6);}
   .nav .lbl{margin-right:11px;font-size:12px;font-weight:600;color:var(--ink);background:rgba(255,255,255,.9);backdrop-filter:blur(6px);
     -webkit-backdrop-filter:blur(6px);border:1.5px solid var(--ink);border-radius:999px;padding:3px 11px;white-space:nowrap;
     opacity:0;transform:translateX(6px);transition:opacity .25s,transform .25s;pointer-events:none;box-shadow:2px 3px 0 rgba(26,26,26,.16);}
   .nav button:hover .lbl,.nav button:focus-visible .lbl{opacity:1;transform:none;}
   @media(max-width:820px){.nav{display:none;}}
+  .nav{display:none;}  /* 2026-09-17 改用右下角頁碼；要恢復圓點就刪這行 */
+  /* 右下角頁碼：目前頁／總頁數，樣式比照導覽標籤的膠囊 */
+  .pageno{position:fixed;right:max(14px,2vw);bottom:max(14px,2vw);z-index:60;display:flex;align-items:baseline;gap:5px;
+    font-family:var(--display);font-weight:800;color:var(--ink);background:rgba(255,255,255,.88);backdrop-filter:blur(6px);
+    -webkit-backdrop-filter:blur(6px);border:1.5px solid var(--ink);border-radius:999px;padding:4px 13px 4px 14px;
+    box-shadow:2px 3px 0 rgba(26,26,26,.16);pointer-events:none;letter-spacing:.02em;}
+  .pageno b{font-size:16px;line-height:1;}
+  .pageno span{font-size:12px;color:var(--gray);font-weight:700;}
+  @media(max-width:640px){.pageno{padding:3px 10px 3px 11px;} .pageno b{font-size:14px;} .pageno span{font-size:11px;}}
 
   /* slides */
   .slide{min-height:100svh;scroll-snap-align:start;scroll-snap-stop:always;display:flex;flex-direction:column;
@@ -373,6 +378,7 @@
 </header>
 
 <nav class="nav" id="dots" aria-label="投影片導覽"></nav>
+<div class="pageno" id="pageno" aria-live="polite"><b>1</b><span>/ 1</span></div>
 
 <!-- 1 COVER -->
 <section class="slide punch" id="s1" data-label="封面">
@@ -871,13 +877,14 @@
   var slides=[].slice.call(document.querySelectorAll('.slide'));
   var dotsWrap=document.getElementById('dots');
   var pfill=document.getElementById('pfill');
+  var pageNo=document.querySelector('#pageno b'), pageTotal=document.querySelector('#pageno span');
   var total=slides.length, active=0;
 
   slides.forEach(function(s,i){
     var b=document.createElement('button');
     b.type='button';
     b.setAttribute('aria-label','前往：'+(s.dataset.label||('第 '+(i+1)+' 頁')));
-    b.innerHTML='<span class="lbl">'+(s.dataset.label||(i+1))+'</span><span class="num">'+(i+1)+'</span>';
+    b.innerHTML='<span class="lbl">'+(s.dataset.label||(i+1))+'</span>';
     b.addEventListener('click',function(){ slides[i].scrollIntoView({behavior:'smooth'}); });
     dotsWrap.appendChild(b);
   });
@@ -888,8 +895,10 @@
     active=i;
     dots.forEach(function(d,j){ d.setAttribute('data-active', j===i?'true':'false'); });
     if(pfill) pfill.style.width=((i+1)/total*100)+'%';
+    if(pageNo) pageNo.textContent=i+1;
   }
   dots[0].setAttribute('data-active','true');
+  if(pageTotal) pageTotal.textContent='/ '+total;
   if(pfill) pfill.style.width=(1/total*100)+'%';
 
   if('IntersectionObserver' in window){
